@@ -64,6 +64,7 @@ One cargo is booked, you can route it. When you initiate a routing request,
 the system will determine routes that might work for the cargo. Once you select
 a route, the cargo will be ready to process handling events at the port. You can
 also change the destination for cargo if needed or track cargo.
+Administrators can also change an unrouted cargo's arrival deadline.
 
 The Incident Logging interface is intended for port personnel registering what 
 happened to cargo. The interface is primarily intended for mobile devices, but
