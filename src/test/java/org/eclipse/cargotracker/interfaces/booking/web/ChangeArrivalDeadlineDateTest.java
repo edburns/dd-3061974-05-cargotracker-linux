@@ -179,6 +179,16 @@ public class ChangeArrivalDeadlineDateTest {
         assertFalse(bean.closed);
     }
 
+    @Test
+    public void testCloseDialogWithoutFacesContextIsNoOp() {
+        new ChangeArrivalDeadlineDate().closeDialog();
+    }
+
+    @Test
+    public void testCancelWithoutFacesContextIsNoOp() {
+        new ChangeArrivalDeadlineDateDialog().cancel();
+    }
+
     private static TestChangeArrivalDeadlineDate beanWithFacade(
             BookingServiceFacade facade) {
         TestChangeArrivalDeadlineDate bean = new TestChangeArrivalDeadlineDate();

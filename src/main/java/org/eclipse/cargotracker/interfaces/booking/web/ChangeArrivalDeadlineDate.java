@@ -102,6 +102,15 @@ public class ChangeArrivalDeadlineDate implements Serializable {
      * container.
      */
     protected void closeDialog() {
-        PrimeFaces.current().dialog().closeDynamic("DONE");
+        if (isDynamicDialogRequest()) {
+            PrimeFaces.current().dialog().closeDynamic("DONE");
+        }
+    }
+
+    private boolean isDynamicDialogRequest() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        return context != null
+                && context.getExternalContext().getRequestParameterMap()
+                .containsKey("pfdlgcid");
     }
 }
