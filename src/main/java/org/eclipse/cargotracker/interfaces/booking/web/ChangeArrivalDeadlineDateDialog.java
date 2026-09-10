@@ -5,6 +5,7 @@ import org.primefaces.event.SelectEvent;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,6 +40,15 @@ public class ChangeArrivalDeadlineDateDialog implements Serializable {
     public void handleReturn(SelectEvent event) {  }
 
     public void cancel() {
-        PrimeFaces.current().dialog().closeDynamic("");
+        if (isDynamicDialogRequest()) {
+            PrimeFaces.current().dialog().closeDynamic("");
+        }
+    }
+
+    private boolean isDynamicDialogRequest() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        return context == null
+                || context.getExternalContext().getRequestParameterMap()
+                .containsKey("pfdlgcid");
     }
 }
