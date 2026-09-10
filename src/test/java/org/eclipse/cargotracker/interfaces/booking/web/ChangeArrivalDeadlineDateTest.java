@@ -6,6 +6,7 @@ import org.eclipse.cargotracker.interfaces.booking.facade.dto.Location;
 import org.eclipse.cargotracker.interfaces.booking.facade.dto.RouteCandidate;
 import org.junit.Test;
 
+import javax.faces.application.FacesMessage;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -80,10 +81,17 @@ public class ChangeArrivalDeadlineDateTest {
             extends ChangeArrivalDeadlineDate {
 
         private boolean closed;
+        private FacesMessage validationMessage;
 
         @Override
         protected void closeDialog() {
             closed = true;
+        }
+
+        @Override
+        protected boolean handleValidationFailure(FacesMessage message) {
+            validationMessage = message;
+            return true;
         }
     }
 
@@ -140,15 +148,14 @@ public class ChangeArrivalDeadlineDateTest {
         TestChangeArrivalDeadlineDate bean = beanWithFacade(facade);
         bean.setTrackingId("ABC123");
 
-        try {
-            bean.changeArrivalDeadline();
-            fail("Expected null selected date to fail");
-        } catch (IllegalArgumentException e) {
-            assertEquals("Arrival deadline date is required.", e.getMessage());
-        }
+        bean.changeArrivalDeadline();
 
         assertNull(facade.changedTrackingId);
         assertFalse(bean.closed);
+        assertEquals("Arrival deadline date is required.",
+                bean.validationMessage.getSummary());
+        assertEquals(FacesMessage.SEVERITY_ERROR,
+                bean.validationMessage.getSeverity());
     }
 
     @Test

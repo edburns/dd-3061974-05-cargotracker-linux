@@ -49,6 +49,10 @@ public class ChangeArrivalDeadlineDate implements Serializable {
         this.arrivalDeadlineDate = arrivalDeadlineDate;
     }
 
+    /**
+     * Loads the cargo for the configured tracking ID and parses its date-only
+     * deadline for editing.
+     */
     public void load() {
         cargo = bookingServiceFacade.loadCargoForRouting(trackingId);
         try {
@@ -61,19 +65,31 @@ public class ChangeArrivalDeadlineDate implements Serializable {
         }
     }
 
+    /**
+     * Submits the selected deadline through the booking facade and closes the
+     * dialog only after successful delegation.
+     */
     public void changeArrivalDeadline() {
         if (arrivalDeadlineDate == null) {
-            FacesContext context = FacesContext.getCurrentInstance();
             FacesMessage message = new FacesMessage("Arrival deadline date is required.");
             message.setSeverity(FacesMessage.SEVERITY_ERROR);
-            if (context != null) {
-                context.addMessage(null, message);
+            if (handleValidationFailure(message)) {
+                return;
             }
             throw new IllegalArgumentException(message.getSummary());
         }
 
         bookingServiceFacade.changeDeadline(trackingId, arrivalDeadlineDate);
         closeDialog();
+    }
+
+    protected boolean handleValidationFailure(FacesMessage message) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        if (context != null) {
+            context.addMessage(null, message);
+            return true;
+        }
+        return false;
     }
 
     void setBookingServiceFacade(BookingServiceFacade bookingServiceFacade) {
