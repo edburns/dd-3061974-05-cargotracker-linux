@@ -6,7 +6,6 @@ import org.eclipse.cargotracker.interfaces.booking.facade.dto.Location;
 import org.eclipse.cargotracker.interfaces.booking.facade.dto.RouteCandidate;
 import org.junit.Test;
 
-import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -176,10 +175,7 @@ public class ChangeArrivalDeadlineDateTest {
     private static TestChangeArrivalDeadlineDate beanWithFacade(
             BookingServiceFacade facade) throws Exception {
         TestChangeArrivalDeadlineDate bean = new TestChangeArrivalDeadlineDate();
-        Field field = ChangeArrivalDeadlineDate.class
-                .getDeclaredField("bookingServiceFacade");
-        field.setAccessible(true);
-        field.set(bean, facade);
+        bean.setBookingServiceFacade(facade);
         return bean;
     }
 
