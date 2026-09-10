@@ -68,7 +68,6 @@ public class ChangeArrivalDeadlineDate implements Serializable {
             message.setSeverity(FacesMessage.SEVERITY_ERROR);
             if (context != null) {
                 context.addMessage(null, message);
-                return;
             }
             throw new IllegalArgumentException(message.getSummary());
         }
@@ -82,7 +81,9 @@ public class ChangeArrivalDeadlineDate implements Serializable {
     }
 
     /**
-     * Allows the action method to be tested outside a JSF/PrimeFaces container.
+     * Closes the PrimeFaces dynamic dialog with the successful "DONE" result.
+     * Protected to allow the action method to be tested outside a JSF/PrimeFaces
+     * container.
      */
     protected void closeDialog() {
         PrimeFaces.current().dialog().closeDynamic("DONE");

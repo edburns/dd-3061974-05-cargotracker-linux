@@ -173,7 +173,7 @@ public class ChangeArrivalDeadlineDateTest {
     }
 
     private static TestChangeArrivalDeadlineDate beanWithFacade(
-            BookingServiceFacade facade) throws Exception {
+            BookingServiceFacade facade) {
         TestChangeArrivalDeadlineDate bean = new TestChangeArrivalDeadlineDate();
         bean.setBookingServiceFacade(facade);
         return bean;
